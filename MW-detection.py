@@ -126,8 +126,8 @@ for fold in range (1,11):
         a2_train = 950
         a1_test = (fold-1)*ns+1
         a2_test = fold*ns
-        custom_mnist_from_csv_train = CustomDatasetFromCSV('C:\\Users\\Seyed\\PycharmProjects\\MindWandering\\label.csv',a1_train,a2_train,0,0,758)
-        custom_mnist_from_csv_test = CustomDatasetFromCSV('C:\\Users\\Seyed\\PycharmProjects\\MindWandering\\label.csv',a1_test,a2_test,0,0,94)
+        custom_mnist_from_csv_train = CustomDatasetFromCSV('...\\label.csv',a1_train,a2_train,0,0,758)
+        custom_mnist_from_csv_test = CustomDatasetFromCSV('...\\label.csv',a1_test,a2_test,0,0,94)
     elif fold == 10:
         a1_train = 1
         a2_train = (fold-2)*ns
