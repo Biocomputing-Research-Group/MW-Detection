@@ -73,17 +73,17 @@ class ConvNet(nn.Module):
             nn.Conv2d(20, 20, (64,1)),
             nn.BatchNorm2d(20),
             nn.ReLU(True),
-            nn.MaxPool2d((1,3)))
+            nn.MaxPool2d((1,2)))
         self.layer2 = nn.Sequential(
-            nn.Conv2d(20, 20, (1,11)),
+            nn.Conv2d(20, 20, (1,10)),
             nn.BatchNorm2d(20),
             nn.ReLU(True),
             nn.MaxPool2d((1,4)))
         self.layer3 = nn.Sequential(
-            nn.Conv2d(20, 20, (1,11)),
+            nn.Conv2d(20, 20, (1,10)),
             nn.BatchNorm2d(20),
             nn.ReLU(True),
-            nn.MaxPool2d(1,3))
+            nn.MaxPool2d(1,4))
         self.layer4 = nn.Sequential(
             nn.Conv2d(20, 20, (1,11)),
             nn.BatchNorm2d(20),
@@ -92,7 +92,7 @@ class ConvNet(nn.Module):
         self.drop_out = nn.Dropout(0.2)
         self.fc1 = nn.Linear(20*1*90, 100)
         self.fc2 = nn.Linear(100, 50)
-        self.fc3 = nn.Linear(50, 3)
+        self.fc3 = nn.Linear(50, 2)
 
 
 
