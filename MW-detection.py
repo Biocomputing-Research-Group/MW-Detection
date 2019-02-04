@@ -21,9 +21,14 @@ import sklearn
 device = torch.device('cuda')
 num_epochs = 40
 num_classes = 2
-batch_size = 1
+batch_size = 64
 learning_rate = 0.01
 
+#class CustomDatasetFromCSV returns the address and length of the dataset used in dataloader, it uses a csv file
+#csv path shows the address of the csv file
+#length returns the length od the dataset
+#a,b,c,d are the first and last indices of the dataset that is divided for 10-fold cross-validation
+#c and d are non-zero if the training dataset does not include consecutive indices
 class CustomDatasetFromCSV(Dataset):
     def __init__(self, csv_path,a,b,c,d,length):
 
@@ -64,7 +69,9 @@ class CustomDatasetFromCSV(Dataset):
 
     def __len__(self):
         return self.image_len
-
+    
+    
+#class ConvNet defines CNN architechture
 class ConvNet(nn.Module):
     def __init__(self, num_classes):
         super(ConvNet, self).__init__()
@@ -95,11 +102,6 @@ class ConvNet(nn.Module):
         self.fc3 = nn.Linear(50, 2)
 
 
-
-
-        #self.fc2 = nn.Linear(100,2)
-
-
     def forward(self, x):
         out = self.layer1(x)
         out = self.layer2(out)
@@ -112,13 +114,7 @@ class ConvNet(nn.Module):
         return out
 
 
-
-#transformations = transforms.Compose([transforms.ToTensor()])
-
-
-
-
-
+#ns is the number of data samples used in each fold (950 samples, 10 folds, each fold has 95 samles)
 ns = 95
 for fold in range (1,11):
     if fold == 1:
@@ -146,8 +142,8 @@ for fold in range (1,11):
         custom_mnist_from_csv_test = CustomDatasetFromCSV('C:\\Users\\Seyed\\PycharmProjects\\MindWandering\\label.csv',a1_test,a2_test,0,0,94)
 
 
-
-    dataset = torch.utils.data.DataLoader(dataset=custom_mnist_from_csv_train, batch_size=1, shuffle=True)
+    # dataloader loads the dataset
+    dataset = torch.utils.data.DataLoader(dataset=custom_mnist_from_csv_train, batch_size=64, shuffle=True)
 
     model = ConvNet(num_classes).to(device)
     model = model.cuda()
@@ -203,7 +199,7 @@ for fold in range (1,11):
     sumtest = 0
     correct = 0
 
-    dataset = torch.utils.data.DataLoader(dataset=custom_mnist_from_csv_test, batch_size=1, shuffle=True)
+    dataset = torch.utils.data.DataLoader(dataset=custom_mnist_from_csv_test, batch_size=64, shuffle=True)
 
 
 
